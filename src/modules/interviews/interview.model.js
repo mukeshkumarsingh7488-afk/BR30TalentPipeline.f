@@ -1,0 +1,4 @@
+const mongoose = require("mongoose");
+const interviewSchema = new mongoose.Schema({candidateName:{type:String,required:true,trim:true,maxlength:120},candidateEmail:{type:String,required:true,trim:true,lowercase:true,maxlength:254},jobRole:{type:String,required:true,trim:true,maxlength:120},scheduledAt:{type:Date,required:true,index:true},durationMinutes:{type:Number,min:5,max:480,default:30},interviewer:{type:String,trim:true,maxlength:120,default:""},meetingLink:{type:String,trim:true,maxlength:2048,default:""},notes:{type:String,trim:true,maxlength:3000,default:""},status:{type:String,enum:["scheduled","completed","cancelled","rescheduled"],default:"scheduled",index:true},createdBy:{type:mongoose.Schema.Types.ObjectId,ref:"TalentPipelineUser",required:true}},{timestamps:true});
+interviewSchema.index({scheduledAt:1,status:1});
+module.exports=mongoose.models.Interview||mongoose.model("Interview",interviewSchema);
