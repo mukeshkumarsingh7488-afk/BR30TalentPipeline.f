@@ -111,83 +111,31 @@ export default function VerifyEmail() {
   return (
     <div className="br30-verify">
       <style>{`
-
-
         .br30-verify { width:100%; max-width:410px; margin:0 auto; color:var(--crm-text,var(--text,#202636)); font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; font-size:14px; font-weight:400; }
-
-
         .br30-verify \\\*,.br30-verify \\\*::before,.br30-verify \\\*::after { box-sizing:border-box; }
-
-
         .br30-verify-icon { display:flex; width:42px; height:42px; align-items:center; justify-content:center; margin-bottom:15px; border:1px solid var(--crm-border,var(--border,#e1e5ec)); border-radius:11px; background:var(--crm-surface,var(--surface,#fff)); color:var(--crm-primary,var(--primary,#4f46e5)); }
-
-
         .br30-verify-icon svg { width:21px; height:21px; }
-
-
         .br30-verify-heading { margin:0 0 7px; font-size:25px; line-height:1.3; letter-spacing:-.4px; font-weight:400; }
-
-
         .br30-verify-description { margin:0 0 18px; color:var(--crm-muted,var(--muted,#697386)); font-size:13px; line-height:1.6; font-weight:400; }
-
-
         .br30-verify-form { display:flex; flex-direction:column; gap:7px; }
-
-
         .br30-verify-label { color:var(--crm-text,var(--text,#202636)); font-size:12px; line-height:1.5; font-weight:400; }
-
-
         .br30-verify-input { display:block; width:100%; height:42px; padding:0 11px; border:1px solid var(--crm-border,var(--border,#e1e5ec)); border-radius:8px; outline:none; background:var(--crm-surface,var(--surface,#fff)); color:var(--crm-text,var(--text,#202636)); font-family:inherit; font-size:13px; font-weight:400; transition:border-color .18s ease,box-shadow .18s ease; }
-
-
         .br30-verify-input::placeholder { color:var(--crm-muted,var(--muted,#8a93a3)); opacity:.85; }
-
-
         .br30-verify-input:focus { border-color:var(--crm-primary,var(--primary,#4f46e5)); box-shadow:0 0 0 3px color-mix(in srgb,var(--crm-primary,var(--primary,#4f46e5)) 12%,transparent); }
-
-
         .br30-verify-input[aria-invalid="true"] { border-color:#dc2626; }
-
-
         .br30-verify-code { letter-spacing:8px; font-size:20px; text-align:center; font-variant-numeric:tabular-nums; }
-
-
         .br30-verify-error { margin:0 0 12px; padding:9px 11px; border:1px solid #fecaca; border-radius:8px; background:#fef2f2; color:#b91c1c; font-size:12px; line-height:1.55; overflow-wrap:anywhere; }
-
-
         .br30-verify-success { margin:0 0 12px; padding:10px 11px; border:1px solid #a7f3d0; border-radius:8px; background:#ecfdf5; color:#065f46; font-size:12px; line-height:1.6; overflow-wrap:anywhere; }
-
-
         .br30-verify-submit { display:flex; width:100%; min-height:43px; align-items:center; justify-content:center; margin-top:8px; padding:10px 14px; border:1px solid var(--crm-primary,var(--primary,#4f46e5)); border-radius:8px; background:var(--crm-primary,var(--primary,#4f46e5)); color:#fff; font-family:inherit; font-size:13px; font-weight:400; cursor:pointer; transition:opacity .18s ease; }
-
-
         .br30-verify-submit:hover:not(:disabled) { opacity:.91; }
-
-
         .br30-verify-submit:disabled { cursor:not-allowed; opacity:.65; }
-
-
         .br30-verify-actions { display:flex; align-items:center; justify-content:center; gap:5px; flex-wrap:wrap; margin-top:16px; color:var(--crm-muted,var(--muted,#697386)); font-size:12px; line-height:1.6; }
-
-
         .br30-verify-link { padding:0; border:0; background:transparent; color:var(--crm-primary,var(--primary,#4f46e5)); font-family:inherit; font-size:12px; font-weight:400; text-decoration:none; cursor:pointer; }
-
-
         .br30-verify-link:hover:not(:disabled) { text-decoration:underline; text-underline-offset:3px; }
-
-
         .br30-verify-link:disabled { opacity:.55; cursor:not-allowed; }
-
-
         .br30-verify-footer { margin:17px 0 0; text-align:center; font-size:12px; line-height:1.6; }
-
-
         @media (max-width:480px) { .br30-verify-heading { font-size:23px; } .br30-verify-description { margin-bottom:15px; } .br30-verify-icon { width:38px; height:38px; margin-bottom:12px; } }
-
-
         @media (prefers-reduced-motion:reduce) { .br30-verify \\\*,.br30-verify \\\*::before,.br30-verify \\\*::after { transition-duration:.01ms!important; } }
-
-
       `}</style>
 
       <div className="br30-verify-icon" aria-hidden="true">

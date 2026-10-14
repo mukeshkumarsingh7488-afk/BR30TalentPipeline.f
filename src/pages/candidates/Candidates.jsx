@@ -1,9 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-
 import { Link, useSearchParams } from "react-router-dom";
-
 import { RefreshCw, Search, Eye, X, Users, GraduationCap, BriefcaseBusiness, FileText, ExternalLink } from "lucide-react";
-
 import { getCandidates } from "../../api/candidate.api.js";
 import { getResumePreview } from "../../api/application.api.js";
 
@@ -219,133 +216,66 @@ export default function Candidates() {
   return (
     <div className="jr-page candidate-page">
       <style>{`
-
 .candidate-page{--bg:#f5f7fb;--surface:#ffffff;--surface-2:#f8fafc;--text:#182230;--muted:#657286;--border:#e2e8f0;--primary:#5847e8;--primary-soft:#edf2ff;--success:#137a50;--success-soft:#e9f8f0;--danger:#b42332;--danger-soft:#fff0f1;--shadow:0 2px 8px rgba(16,24,40,.04);width:100%;min-width:0;min-height:calc(100vh - 120px);padding:24px;box-sizing:border-box;color:var(--text);background:var(--bg);font-size:14px;color-scheme:light}
-
 :is(html[data-theme="dark"],body[data-theme="dark"],html.dark,body.dark,[data-theme="dark"],.dark) .candidate-page,.candidate-page:is([data-theme="dark"],.dark){--bg:#0f1420;--surface:#191f2e;--surface-2:#20283a;--text:#eef2ff;--muted:#a2abc3;--border:#2b3449;--primary:#8b7cff;--primary-soft:rgba(101,86,232,.18);--success:#54d99e;--success-soft:rgba(38,181,120,.14);--danger:#ff9292;--danger-soft:rgba(220,90,90,.14);--shadow:0 2px 10px rgba(0,0,0,.16);color:var(--text);background:var(--bg);color-scheme:dark}
-
 .candidate-page *{box-sizing:border-box}
-
 .candidate-page .jr-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin:0 0 24px;flex-wrap:wrap}
-
 .candidate-page .jr-title{font-size:28px;line-height:1.2;font-weight:600;margin:0;color:var(--text)}
-
 .candidate-page .jr-subtitle{margin:8px 0 0;color:var(--muted);line-height:1.65;max-width:680px}
-
 .candidate-page .jr-btn{border:1px solid var(--border);border-radius:10px;padding:10px 13px;display:inline-flex;align-items:center;justify-content:center;gap:8px;font:inherit;font-weight:500;cursor:pointer;transition:background .15s,border-color .15s,color .15s;color:var(--text);background:var(--surface);white-space:nowrap;text-decoration:none}
-
 .candidate-page .jr-btn:disabled{opacity:.55;cursor:not-allowed}
-
 .candidate-page .jr-btn:hover:not(:disabled){border-color:var(--primary);background:var(--surface-2)}
-
 .candidate-page .jr-primary{background:#5847e8;border-color:#5847e8;color:#fff}
-
 .candidate-page .jr-primary:hover:not(:disabled){background:#4837d2;border-color:#4837d2;color:#fff}
-
 .candidate-page .jr-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:18px}
-
 .candidate-page .jr-stat,.candidate-page .jr-panel{background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow)}
-
 .candidate-page .jr-stat{padding:16px;min-width:0}
-
 .candidate-page .jr-stat-top{display:flex;align-items:center;justify-content:space-between;gap:8px;color:var(--muted);font-size:12px}
-
 .candidate-page .jr-stat-number{font-size:27px;font-weight:600;margin-top:11px;color:var(--text);overflow-wrap:anywhere}
-
 .candidate-page .jr-stat-icon{width:34px;height:34px;border-radius:10px;background:var(--primary-soft);color:var(--primary);display:grid;place-items:center;flex-shrink:0}
-
 .candidate-page .jr-panel{padding:16px;margin-bottom:16px;min-width:0;overflow:hidden}
-
 .candidate-page .jr-toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:15px}
-
 .candidate-page .jr-search{position:relative;display:flex;align-items:center;gap:9px;min-width:200px;flex:1;color:var(--muted);border:1px solid var(--border);border-radius:10px;padding:0 11px;background:var(--surface);height:42px}
-
 .candidate-page .jr-search:focus-within{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft)}
-
 .candidate-page .jr-search input{width:100%;min-width:0;border:0;outline:0;background:transparent;color:var(--text);font:inherit}
-
 .candidate-page .jr-search input::placeholder{color:var(--muted);opacity:.85}
-
 .candidate-page .jr-search button{border:0;background:transparent;color:var(--muted);padding:3px;display:grid;place-items:center;cursor:pointer;border-radius:5px}
-
 .candidate-page .jr-search button:hover{background:var(--surface-2)}
-
 .candidate-page .jr-count{color:var(--muted);font-size:12px;white-space:nowrap}
-
-.candidate-page .jr-table-wrap{width:100%;max-width:100%;overflow:auto;border-radius:10px;overscroll-behavior:contain;scrollbar-gutter:stable}
-
-.candidate-page .jr-table-wrap::-webkit-scrollbar{width:8px;height:8px}
-
-.candidate-page .jr-table-wrap::-webkit-scrollbar-thumb{background:var(--border);border-radius:8px}
-
-.candidate-page .jr-table-wrap::-webkit-scrollbar-thumb:hover{background:var(--muted)}
-
-.candidate-page .jr-table{width:100%;border-collapse:collapse;min-width:1160px;text-align:left;background:var(--surface);color:var(--text)}
-
-.candidate-page .jr-table th{font-size:11px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;color:var(--muted);padding:12px;border-bottom:1px solid var(--border);background:var(--surface-2);white-space:nowrap;position:sticky;top:0;z-index:2}
-
+.candidate-page .jr-table-wrap{width:100%;max-width:100%;overflow-x:auto;overflow-y:hidden;border-radius:10px;-webkit-overflow-scrolling:touch}
+.candidate-page .jr-table{width:100%;min-width:1160px;border-collapse:collapse;table-layout:auto;text-align:left;background:var(--surface);color:var(--text)}
+.candidate-page .jr-table th{font-size:11px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;color:var(--muted);padding:12px;border-bottom:1px solid var(--border);background:var(--surface-2);white-space:nowrap;position:static}
 .candidate-page .jr-table td{padding:13px 12px;border-bottom:1px solid var(--border);vertical-align:middle;color:var(--text);font-size:12px;line-height:1.55}
-
 .candidate-page .jr-table tbody tr{background:var(--surface);transition:background .15s}
-
 .candidate-page .jr-table tbody tr:nth-child(even){background:var(--surface-2)}
-
 .candidate-page .jr-table tbody tr:hover{background:var(--primary-soft)}
-
 .candidate-page .jr-table tbody tr:last-child td{border-bottom:0}
-
 .candidate-page .jr-candidate{display:flex;align-items:center;gap:10px;min-width:185px}
-
 .candidate-page .jr-avatar{width:38px;height:38px;flex-shrink:0;border-radius:10px;display:grid;place-items:center;overflow:hidden;background:var(--primary-soft);color:var(--primary);font-weight:600;font-size:13px;border:1px solid var(--border)}
-
 .candidate-page .jr-avatar img{width:100%;height:100%;object-fit:cover;display:block}
-
 .candidate-page .jr-candidate-name{font-weight:600;color:var(--text);overflow-wrap:anywhere}
-
 .candidate-page .jr-secondary{color:var(--muted);font-size:12px;line-height:1.55;overflow-wrap:anywhere}
-
 .candidate-page .jr-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 9px;border-radius:999px;font-size:11px;font-weight:500;white-space:nowrap}
-
 .candidate-page .jr-active{background:var(--success-soft);color:var(--success)}
-
 .candidate-page .jr-inactive{background:var(--danger-soft);color:var(--danger)}
-
 .candidate-page .jr-actions{display:flex;gap:6px;align-items:center}
-
 .candidate-page .jr-icon-btn{width:33px;height:33px;padding:0;border:1px solid var(--border);background:var(--surface);color:var(--muted);border-radius:8px;display:grid;place-items:center;cursor:pointer;transition:background .15s,border-color .15s,color .15s}
-
 .candidate-page .jr-icon-btn:hover{border-color:var(--primary);color:var(--primary);background:var(--surface-2)}
-
 .candidate-page .jr-view-link{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:32px;padding:6px 10px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text);font-size:12px;text-decoration:none;white-space:nowrap}
-
 .candidate-page .jr-view-link:hover{border-color:var(--primary);color:var(--primary);background:var(--primary-soft)}
-
 .candidate-page .jr-empty{padding:42px 18px;text-align:center;color:var(--muted);display:flex;align-items:center;flex-direction:column;gap:10px}
-
 .candidate-page .jr-empty strong{color:var(--text);font-size:14px;font-weight:600}
-
 .candidate-page .jr-state{padding:14px;border:1px solid var(--border);border-radius:10px;color:var(--muted);background:var(--surface);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-
 .candidate-page .jr-notice{padding:12px 14px;border-radius:9px;margin-bottom:14px;background:var(--primary-soft);border:1px solid var(--border);color:var(--text);line-height:1.5;overflow-wrap:anywhere}
-
 .candidate-page .jr-error{background:var(--danger-soft);border-color:var(--danger);color:var(--danger)}
-
 .candidate-page .jr-footer{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 2px 0;color:var(--muted);font-size:12px}
-
 .candidate-page .jr-inline-link{display:inline-flex;align-items:center;gap:5px;color:var(--primary);text-decoration:none;font-size:12px;font-weight:500}
-
 .candidate-page .jr-inline-link:hover{text-decoration:underline}
-
 .candidate-page .jr-metric{font-weight:500;color:var(--text);white-space:nowrap}
-
 @media(max-width:1100px){.candidate-page .jr-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
-
 @media(max-width:900px){.candidate-page{padding:20px}.candidate-page .jr-panel{padding:14px}}
-
 @media(max-width:600px){.candidate-page{padding:14px}.candidate-page .jr-head{margin-bottom:16px;gap:12px}.candidate-page .jr-title{font-size:24px}.candidate-page .jr-subtitle{font-size:13px}.candidate-page .jr-head>div:last-child{width:100%}.candidate-page .jr-head>div:last-child .jr-btn{flex:1}.candidate-page .jr-stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.candidate-page .jr-stat{padding:12px}.candidate-page .jr-stat-number{font-size:23px}.candidate-page .jr-stat-top{font-size:11px}.candidate-page .jr-stat-icon{width:30px;height:30px}.candidate-page .jr-panel{padding:11px}.candidate-page .jr-toolbar{gap:8px}.candidate-page .jr-search{flex:1 1 100%;min-width:0}.candidate-page .jr-table{min-width:1160px}}
-
 @media(prefers-reduced-motion:reduce){.candidate-page .jr-btn,.candidate-page .jr-icon-btn,.candidate-page .jr-table tbody tr{transition:none}}
-
       `}</style>
 
       <header className="jr-head">

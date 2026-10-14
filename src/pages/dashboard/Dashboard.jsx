@@ -269,13 +269,14 @@ export default function Dashboard() {
 
   const stats = useMemo(() => {
     const source = overview || {};
+    const totals = source.totals || {};
     const summary = firstValue(source, ["stats", "summary", "overview", "metrics"], {}) || {};
 
     return {
-      candidates: firstValue(summary, ["totalCandidates", "candidates", "candidateCount"], firstValue(source, ["totalCandidates", "candidateCount"], 0)),
-      applications: firstValue(summary, ["totalApplications", "applications", "applicationCount"], firstValue(source, ["totalApplications", "applicationCount"], 0)),
-      jobs: firstValue(summary, ["activeJobRoles", "activeJobs", "totalActiveJobs", "openJobs"], firstValue(source, ["activeJobRoles", "activeJobs", "openJobs"], 0)),
-      interviews: firstValue(summary, ["scheduledInterviews", "upcomingInterviews", "interviews"], firstValue(source, ["scheduledInterviews", "upcomingInterviews"], 0)),
+      candidates: firstValue(totals, ["candidates", "totalCandidates"], firstValue(summary, ["totalCandidates", "candidates", "candidateCount"], 0)),
+      applications: firstValue(totals, ["applications", "totalApplications"], firstValue(summary, ["totalApplications", "applications", "applicationCount"], 0)),
+      jobs: firstValue(totals, ["activeJobRoles", "activeJobs", "openJobs"], firstValue(summary, ["activeJobRoles", "activeJobs", "totalActiveJobs", "openJobs"], 0)),
+      interviews: firstValue(totals, ["scheduledInterviews", "upcomingInterviews", "interviews"], firstValue(summary, ["scheduledInterviews", "upcomingInterviews", "interviews"], 0)),
       candidateTrend: firstValue(summary, ["candidateGrowth", "candidateTrend", "candidatesChange"], null),
       applicationTrend: firstValue(summary, ["applicationGrowth", "applicationTrend", "applicationsChange"], null),
       jobsTrend: firstValue(summary, ["jobGrowth", "jobTrend", "jobsChange"], null),
@@ -507,9 +508,10 @@ export default function Dashboard() {
                 <div className="dash-activity-list">
                   {activities.length ? (
                     activities.slice(0, 5).map((item, index) => {
-                      const title = firstValue(item, ["title", "message", "description", "action"], "Activity update");
+                      const rawTitle = [item.title, item.message, item.description, item.metadata?.description, item.action].find((value) => typeof value === "string" && value.trim());
+                      const title = rawTitle ? rawTitle.trim() : "Activity update";
                       const time = firstValue(item, ["createdAt", "timestamp", "date", "time", "updatedAt"], null);
-                      const type = String(firstValue(item, ["type", "status", "event"], "")).toLowerCase();
+                      const type = String(item.type || item.action || item.entityType || item.status || "").toLowerCase();
                       const Icon = type.includes("hire") || type.includes("complete") ? CheckCircle2 : type.includes("interview") ? CalendarDays : type.includes("job") ? BriefcaseBusiness : Clock3;
                       const tone = type.includes("hire") || type.includes("complete") ? "success" : type.includes("job") ? "warning" : "";
                       return (
@@ -624,7 +626,7 @@ export default function Dashboard() {
                   </button>
                   <button type="button" className="dash-quick-action" onClick={() => openPath("/candidates")}>
                     <UserRound size={23} />
-                    <span>Add Candidate</span>
+                    <span>New Candidate</span>
                   </button>
                   <button type="button" className="dash-quick-action" onClick={() => openPath("/applications")}>
                     <FileText size={23} />

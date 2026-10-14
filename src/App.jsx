@@ -21,6 +21,7 @@ import Interviews from "./pages/interviews/Interviews.jsx";
 import Reports from "./pages/reports/Reports.jsx";
 import Settings from "./pages/settings/Settings.jsx";
 import SearchResults from "./pages/search/SearchResults.jsx";
+import ActivityLog from "./pages/activity/ActivityLog.jsx";
 
 import PublicRoute from "./routes/PublicRoute.jsx";
 import ProtectedRoute from "./routes/ProtectedRoute.jsx";
@@ -58,6 +59,7 @@ export default function App() {
             <Route path="/publish-forms" element={<PublishForms />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/search" element={<SearchResults />} />
+            <Route path="/activity" element={<ActivityLog />} />
           </Route>
         </Route>
 

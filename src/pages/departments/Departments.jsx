@@ -214,9 +214,9 @@ export default function Departments() {
 .dept-panel{padding:16px}
 .dept-toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
 .dept-search{display:flex;align-items:center;gap:9px;min-width:200px;flex:1;height:42px;padding:0 11px;border:1px solid var(--dept-border);border-radius:9px;background:var(--dept-input-bg);color:var(--dept-muted);transition:border-color .18s ease,box-shadow .18s ease}
-.dept-search:focus-within{border-color:var(--dept-primary);box-shadow:0 0 0 3px var(--dept-primary-soft)}
+.dept-search:focus-within{border-color:var(--dept-primary);box-shadow:none}
 .dept-search>svg{flex:0 0 auto}
-.dept-search input{width:100%;min-width:0;height:100%;padding:0;border:0;outline:none;background:transparent;color:var(--dept-text);font-size:13px}
+.dept-search input{width:100%;min-width:0;height:100%;padding:0;border:0;outline:none!important;box-shadow:none!important;background:transparent;color:var(--dept-text);font-size:13px}
 .dept-search input::placeholder,.dept-input::placeholder,.dept-textarea::placeholder{color:var(--dept-muted);opacity:.85}
 .dept-search button{display:grid;place-items:center;flex:0 0 25px;width:25px;height:25px;padding:0;border:0;border-radius:5px;background:transparent;color:var(--dept-muted);cursor:pointer}
 .dept-search button:hover{background:var(--dept-surface-2);color:var(--dept-text)}

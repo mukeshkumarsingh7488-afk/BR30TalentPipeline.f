@@ -1,0 +1,21 @@
+User-agent: *
+Allow: /apply
+Allow: /f/
+
+Disallow: /dashboard
+Disallow: /job-roles
+Disallow: /candidates
+Disallow: /applications
+Disallow: /departments
+Disallow: /interviews
+Disallow: /reports
+Disallow: /publish-forms
+Disallow: /settings
+Disallow: /search
+Disallow: /activity
+Disallow: /register
+Disallow: /verify-email
+Disallow: /forgot-password
+Disallow: /reset-password
+
+Sitemap: https://br30talentpipelinef.vercel.app/sitemap.xml
