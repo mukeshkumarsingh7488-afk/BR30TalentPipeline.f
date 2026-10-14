@@ -373,9 +373,9 @@ export default function DashboardLayout() {
         html,body{overflow:hidden}
         body{min-height:100vh}
         #root{height:100vh;min-height:0}
-        .tp-shell{--tp-primary:#5145e5;--tp-bg:#f5f7fc;--tp-card:#fff;--tp-text:#17203a;--tp-muted:#73809b;--tp-border:#e7ebf3;display:flex;width:100%;height:100vh;height:100dvh;min-height:0;overflow:hidden;margin:0;padding:0;background:var(--tp-bg);color:var(--tp-text);font:14px Inter,ui-sans-serif,system-ui,sans-serif}
+        .tp-shell{--tp-primary:#5145e5;--tp-bg:var(--bg,#f5f7fc);--tp-card:var(--surface,#fff);--tp-text:var(--text,#17203a);--tp-muted:var(--muted,#73809b);--tp-border:var(--border,#e7ebf3);display:flex;width:100%;height:100vh;height:100dvh;min-height:0;overflow:hidden;margin:0;padding:0;background:var(--tp-bg);color:var(--tp-text);font:14px Inter,ui-sans-serif,system-ui,sans-serif}
         .tp-shell *{box-sizing:border-box}
-        html[data-theme="dark"] .tp-shell{--tp-bg:#111522;--tp-card:#191e2d;--tp-text:#f1f3fb;--tp-muted:#a0abc3;--tp-border:#2c3447}
+        html[data-theme="dark"] .tp-shell,html.dark .tp-shell{--tp-bg:var(--bg,#111318);--tp-card:var(--surface,#191c24);--tp-text:var(--text,#f1f3fb);--tp-muted:var(--muted,#a0abc3);--tp-border:var(--border,#2c3447)}
         .tp-side{width:248px;flex:0 0 248px;position:relative;height:100%;min-height:0;display:flex;flex-direction:column;padding:20px 12px;background:linear-gradient(180deg,#4537cf,#392fc0);color:#fff;z-index:50;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:#ffffff45 transparent}
         .tp-brand{display:flex;align-items:center;gap:11px;padding:0 9px 25px;color:#fff;text-decoration:none;flex-shrink:0}
         .tp-brand img{width:41px;height:41px;object-fit:contain;border:1px solid #29234f;border-radius:10px;background:transparent;padding:2px}

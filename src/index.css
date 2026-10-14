@@ -66,7 +66,6 @@
   --code-bg: #242733;
   --input-bg: #191c24;
   --surface-hover: #242733;
-  --surface: #191c24;
   --border-color: #303440;
   --text-color: #e5e7eb;
   --text-primary: #f9fafb;
@@ -89,6 +88,7 @@ body,
 html {
   min-height: 100%;
   -webkit-text-size-adjust: 100%;
+  background: var(--bg);
 }
 
 body {
@@ -172,6 +172,61 @@ code {
   overflow-wrap: anywhere;
 }
 
+/* Disable text selection in normal UI */
+body,
+body * {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Allow text selection on Application Details */
+.tp-page,
+.tp-page * {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+/* Allow text selection on Public Forms */
+.public-form-page,
+.public-form-page *,
+.pf-page,
+.pf-page * {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+/* Allow text selection on Candidate / Job Role Details */
+.jr-page.cd-page,
+.jr-page.cd-page * {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+/* Allow text selection in tables */
+table,
+table *,
+[role="table"],
+[role="table"] *,
+.crm-table,
+.crm-table *,
+.data-table,
+.data-table * {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+/* Allow selection in form controls */
+input,
+textarea,
+select,
+option,
+[contenteditable="true"],
+[contenteditable="true"] * {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+/* Selection colors */
 ::selection {
   background: var(--primary);
   color: #ffffff;
@@ -197,4 +252,26 @@ code {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+html {
+  min-height: 100%;
+  background: #f7f8fc;
+}
+
+html[data-theme="dark"],
+html.dark {
+  background: #111318 !important;
+  color-scheme: dark;
+}
+
+html[data-theme="dark"] body,
+html[data-theme="dark"] #root,
+html[data-theme="dark"] .app,
+html[data-theme="dark"] .app-page,
+html.dark body,
+html.dark #root,
+html.dark .app,
+html.dark .app-page {
+  background-color: #111318 !important;
 }

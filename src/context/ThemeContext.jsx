@@ -3,14 +3,12 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState } 
 const ThemeContext = createContext(null);
 
 const STORAGE_KEY = "br30-talent-pipeline-theme";
-
 const VALID_THEMES = ["light", "dark", "device"];
 
 function getSavedTheme() {
   try {
     const savedTheme = localStorage.getItem(STORAGE_KEY);
-
-    return VALID_THEMES.includes(savedTheme) ? savedTheme : "light";
+    return VALID_THEMES.includes(savedTheme) ? savedTheme : "device";
   } catch {
     return "device";
   }
@@ -22,6 +20,17 @@ function getDeviceTheme() {
   }
 
   return "light";
+}
+
+function applyTheme(resolvedTheme) {
+  if (typeof document === "undefined") return;
+
+  const root = document.documentElement;
+
+  root.dataset.theme = resolvedTheme;
+  root.style.colorScheme = resolvedTheme;
+  root.classList.toggle("dark", resolvedTheme === "dark");
+  root.classList.toggle("light", resolvedTheme === "light");
 }
 
 export function ThemeProvider({ children }) {
@@ -41,7 +50,7 @@ export function ThemeProvider({ children }) {
     try {
       localStorage.setItem(STORAGE_KEY, nextTheme);
     } catch {
-      // The theme still works if browser storage is unavailable.
+      // Theme still works if browser storage is unavailable.
     }
   }, []);
 
@@ -57,7 +66,6 @@ export function ThemeProvider({ children }) {
     };
 
     setSystemTheme(mediaQuery.matches ? "dark" : "light");
-
     mediaQuery.addEventListener("change", handleSystemThemeChange);
 
     return () => {
@@ -66,13 +74,7 @@ export function ThemeProvider({ children }) {
   }, []);
 
   useEffect(() => {
-    const root = document.documentElement;
-
-    root.dataset.theme = resolvedTheme;
-    root.style.colorScheme = resolvedTheme;
-
-    root.classList.toggle("dark", resolvedTheme === "dark");
-    root.classList.toggle("light", resolvedTheme === "light");
+    applyTheme(resolvedTheme);
   }, [resolvedTheme]);
 
   const value = useMemo(

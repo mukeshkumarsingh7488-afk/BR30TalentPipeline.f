@@ -3,6 +3,36 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      (function () {
+        var root = document.documentElement;
+
+        try {
+          var key = "br30-talent-pipeline-theme";
+          var saved = localStorage.getItem(key);
+          var systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+          var theme = saved === "dark" ? "dark" : saved === "light" ? "light" : systemDark ? "dark" : "light";
+
+          var background = theme === "dark" ? "#111318" : "#f7f8fc";
+
+          root.dataset.theme = theme;
+          root.classList.remove("light", "dark");
+          root.classList.add(theme);
+          root.style.colorScheme = theme;
+          root.style.backgroundColor = background;
+
+          // Apply the theme before React renders.
+          var earlyStyle = document.createElement("style");
+          earlyStyle.textContent = "html,body,#root{background-color:" + background + ";color-scheme:" + theme + ";}" + (theme === "dark" ? "html,body,#root{color:#e5e7eb;}" : "html,body,#root{color:#17203a;}");
+
+          document.head.appendChild(earlyStyle);
+        } catch (error) {
+          root.style.backgroundColor = "#f7f8fc";
+        }
+      })();
+    </script>
+
     <meta name="color-scheme" content="light dark" />
     <meta name="theme-color" content="#071426" />
     <title>BR30 Talent Pipeline | Recruitment & Candidate Management</title>
