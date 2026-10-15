@@ -142,7 +142,7 @@ export default function Login() {
             className="br30-login-input"
             type="email"
             name="email"
-            placeholder="you\@company.com"
+            placeholder="you@company.com"
             autoComplete="username"
             autoCapitalize="none"
             spellCheck={false}
