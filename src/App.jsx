@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate, Outlet } from "react-router-dom";
 
 import AuthLayout from "./layouts/AuthLayout.jsx";
 import DashboardLayout from "./layouts/DashboardLayout.jsx";
@@ -22,9 +22,22 @@ import Reports from "./pages/reports/Reports.jsx";
 import Settings from "./pages/settings/Settings.jsx";
 import SearchResults from "./pages/search/SearchResults.jsx";
 import ActivityLog from "./pages/activity/ActivityLog.jsx";
+import AdminUsersPage from "./pages/admin/AdminUsersPage.jsx";
 
 import PublicRoute from "./routes/PublicRoute.jsx";
 import ProtectedRoute from "./routes/ProtectedRoute.jsx";
+
+import { useAuth } from "./context/AuthContext.jsx";
+
+function AdminOnlyRoute() {
+  const { user } = useAuth();
+
+  if (user?.role !== "ADMIN") {
+    return <Navigate to="/dashboard" replace />;
+  }
+
+  return <Outlet />;
+}
 
 export default function App() {
   return (
@@ -60,6 +73,9 @@ export default function App() {
             <Route path="/settings" element={<Settings />} />
             <Route path="/search" element={<SearchResults />} />
             <Route path="/activity" element={<ActivityLog />} />
+            <Route element={<AdminOnlyRoute />}>
+              <Route path="/admin/users" element={<AdminUsersPage />} />
+            </Route>
           </Route>
         </Route>
 

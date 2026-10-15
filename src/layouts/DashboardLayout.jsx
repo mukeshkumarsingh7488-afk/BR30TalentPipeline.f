@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
-import { Activity, Bell, BriefcaseBusiness, CalendarDays, Building2, BarChart3, FileText, LayoutDashboard, LogOut, Menu, Moon, Search, Settings, Sun, Users, X } from "lucide-react";
+import { Activity, Bell, BriefcaseBusiness, ShieldCheck, CalendarDays, Building2, BarChart3, FileText, LayoutDashboard, LogOut, Menu, Moon, Search, Settings, Sun, Users, X } from "lucide-react";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useTheme } from "../context/ThemeContext.jsx";
 import Swal from "sweetalert2";
@@ -22,6 +22,7 @@ const NAV_ITEMS = [
   { to: "/activity", label: "Activity Log", Icon: Activity },
   { to: "/reports", label: "Reports", Icon: BarChart3 },
   { to: "/publish-forms", label: "Publish Forms", Icon: FileText },
+  { to: "/admin/users", label: "User Management", Icon: ShieldCheck, adminOnly: true },
 ];
 
 const getInitials = (value = "") =>
@@ -55,6 +56,8 @@ const getSearchName = (item) => item?.fullName || item?.name || [item?.firstName
 
 export default function DashboardLayout() {
   const { user, logout } = useAuth();
+
+  const visibleNavItems = NAV_ITEMS.filter((item) => !item.adminOnly || user?.role === "ADMIN");
   const { theme, setTheme } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
@@ -507,7 +510,7 @@ export default function DashboardLayout() {
         </NavLink>
 
         <nav className="tp-nav" aria-label="Main navigation">
-          {NAV_ITEMS.map(({ to, label, Icon }) => (
+          {visibleNavItems.map(({ to, label, Icon }) => (
             <NavLink key={to} to={to} end={to === "/dashboard"} onClick={() => setMobileOpen(false)}>
               <Icon size={19} />
               <span>{label}</span>
@@ -612,7 +615,9 @@ export default function DashboardLayout() {
                       </div>
                     ))}
 
-                    {!searchResults.candidates.length && !searchResults.roles.length && !searchResults.applications.length && <div className="tp-live-empty">No results found for “{globalSearch.trim()}”</div>}
+                    {!searchResults.candidates.length && !searchResults.roles.length && !searchResults.applications.length && !searchResults.departments.length && !searchResults.interviews.length && !searchResults.activities.length && (
+                      <div className="tp-live-empty">No results found for “{globalSearch.trim()}”</div>
+                    )}
 
                     <div className="tp-live-footer">
                       <button
