@@ -129,11 +129,19 @@ export function AuthProvider({ children }) {
         throw new Error("Your account role is not authorized.");
       }
 
-      if (newUser.isActive !== true || newUser.emailVerified !== true) {
-        throw new Error("Your account is not eligible to access the dashboard.");
+      if (newUser.isActive !== true) {
+        throw new Error("Your account has been blocked. Please contact the administrator.");
+      }
+
+      if (newUser.emailVerified !== true) {
+        throw new Error("Please verify your email before logging in.");
       }
 
       if (newUser.role === "HR" && newUser.approvalStatus !== "APPROVED") {
+        if (newUser.approvalStatus === "REJECTED") {
+          throw new Error("Your HR account application has been rejected. Please contact the administrator.");
+        }
+
         throw new Error("Your HR account is awaiting admin approval.");
       }
 
