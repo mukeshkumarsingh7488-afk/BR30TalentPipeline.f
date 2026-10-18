@@ -803,7 +803,7 @@ export default function PublicApplicationForm() {
             </form>
           </div>
         )}
-        <div className="pub-footer">Powered by BR30 Talent Pipeline</div>
+        <div className="pub-footer">Powered by BR30 Group</div>
       </div>
     </div>
   );
